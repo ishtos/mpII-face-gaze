@@ -1,0 +1,6 @@
+opencv-python
+torch
+torchvision
+h5py
+argparse
+pandas
