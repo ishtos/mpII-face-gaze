@@ -9,10 +9,8 @@
 !wget http://datasets.d2.mpi-inf.mpg.de/MPIIGaze/MPIIFaceGaze_normalized.zip
 ```
 
-<b>
-  Need to change .mat files to .h files.  
-  The way is written in Readme.md at download files.
-</b>
+<b>Need to change .mat files to .h files.</b>
+<b>The way is written in Readme.md at download files.</b>
 
 # Usage
 
