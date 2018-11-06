@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Dataset
+/MPIIGaze.zip
+/MPIIFaceGaze.zip
