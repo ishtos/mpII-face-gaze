@@ -4,6 +4,8 @@
 - PyTorch
 - OpenCV
 
+```pip install -r requirement.txt```
+
 # Download the dataset 
 ```
 !wget http://datasets.d2.mpi-inf.mpg.de/MPIIGaze/MPIIFaceGaze_normalized.zip
@@ -13,8 +15,6 @@
 <b>The way is written in Readme.md in downloaded files.</b>
 
 # Usage
-## Set up
-```pip install -r requirement.txt```
 
 # Result
 
