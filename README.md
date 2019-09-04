@@ -10,7 +10,7 @@
 ```
 
 <b>Need to change .mat files to .h files.</b>  
-<b>The way is written in Readme.md at download files.</b>
+<b>The way is written in Readme.md in downloaded files.</b>
 
 # Usage
 
