@@ -13,6 +13,8 @@
 <b>The way is written in Readme.md in downloaded files.</b>
 
 # Usage
+## Set up
+```pip install -r requirement.txt```
 
 # Result
 
