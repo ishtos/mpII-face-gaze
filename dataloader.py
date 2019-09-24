@@ -19,7 +19,7 @@ class MPIIFaceGazeDataset(torch.utils.data.Dataset):
         self.gazes = torch.from_numpy(self.gazes)
 
     def __getitem__(self, index):
-        return self.images[index][[2, 1, 0],:,:].transpose((1, 2, 0)), self.gazes[index][0:2]
+        return self.images[index][[2, 1, 0], :, :].transpose((1, 2, 0)), self.gazes[index][0:2]
 
     def __len__(self):
         return self.length
@@ -36,8 +36,7 @@ def get_loader(dataset_dir, test_subject_id, batch_size, num_workers, use_gpu):
     test_subject_id = subject_ids[test_subject_id]
 
     train_dataset = torch.utils.data.ConcatDataset([
-        MPIIFaceGazeDataset(subject_id, dataset_dir) for subject_id in subject_ids
-        if subject_id != test_subject_id
+        MPIIFaceGazeDataset(subject_id, dataset_dir) for subject_id in subject_ids if subject_id != test_subject_id
     ])
     test_dataset = MPIIFaceGazeDataset(test_subject_id, dataset_dir)
 
@@ -52,6 +51,7 @@ def get_loader(dataset_dir, test_subject_id, batch_size, num_workers, use_gpu):
         pin_memory=use_gpu,
         drop_last=True,
     )
+    
     test_loader = torch.utils.data.DataLoader(
         test_dataset,
         batch_size=batch_size,
@@ -60,4 +60,5 @@ def get_loader(dataset_dir, test_subject_id, batch_size, num_workers, use_gpu):
         pin_memory=use_gpu,
         drop_last=False,
     )
+    
     return train_loader, test_loader
