@@ -44,7 +44,7 @@ class AverageMeter(object):
         self.count += num
         self.avg = self.sum / self.count
 
-
+        
 def convert_to_unit_vector(angles):
     x = -torch.cos(angles[:, 0]) * torch.sin(angles[:, 1])
     y = -torch.sin(angles[:, 0])
@@ -55,13 +55,11 @@ def convert_to_unit_vector(angles):
     z /= norm
     return x, y, z
 
-
 def compute_angle_error(preds, labels):
     pred_x, pred_y, pred_z = convert_to_unit_vector(preds)
     label_x, label_y, label_z = convert_to_unit_vector(labels)
     angles = pred_x * label_x + pred_y * label_y + pred_z * label_z
     return torch.acos(angles) * 180 / np.pi
-
 
 def train(epoch, model, optimizer, criterion, train_loader, config, writer):
     global global_step
@@ -81,9 +79,7 @@ def train(epoch, model, optimizer, criterion, train_loader, config, writer):
         #         images, normalize=True, scale_each=True)
         #     writer.add_image('Train/Image', image, epoch)
 
-        images = images.cuda()
-        gazes = gazes.cuda()
-
+        images, gazes = images.cuda(), gazes.cuda()
         optimizer.zero_grad()
 
         outputs = model(images)
@@ -122,7 +118,6 @@ def train(epoch, model, optimizer, criterion, train_loader, config, writer):
     #     writer.add_scalar('Train/AngleError', angle_error_meter.avg, epoch)
     #     writer.add_scalar('Train/Time', elapsed, epoch)
 
-
 def test(epoch, model, criterion, test_loader, config, writer):
     logger.info('Test {}'.format(epoch))
 
@@ -131,14 +126,14 @@ def test(epoch, model, criterion, test_loader, config, writer):
     loss_meter = AverageMeter()
     angle_error_meter = AverageMeter()
     start = time.time()
+    
     for step, (images, gazes) in enumerate(test_loader):
         # if config['tensorboard_images'] and epoch == 0 and step == 0:
         #     image = torchvision.utils.make_grid(
         #         images, normalize=True, scale_each=True)
         #     writer.add_image('Test/Image', image, epoch)
 
-        images = images.cuda()
-        gazes = gazes.cuda()
+        images, gazes = images.cuda(), gazes.cuda()
 
         with torch.no_grad():
             outputs = model(images)
@@ -167,7 +162,6 @@ def test(epoch, model, criterion, test_loader, config, writer):
     #         writer.add_histogram(name, param, global_step)
 
     return angle_error_meter.avg
-
 
 def main(args):
     model = GazeNet()
@@ -211,7 +205,8 @@ def main(args):
         nesterov=args.nesterov)
     scheduler = torch.optim.lr_scheduler.MultiStepLR(
         optimizer, milestones=[20, 30], gamma=args.lr_decay)
-
+    
+    # Tensorboard Settings
     # config = {
     #     'tensorboard': args.tensorboard,
     #     'tensorboard_images': args.tensorboard_images,
